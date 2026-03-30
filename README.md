@@ -1,45 +1,89 @@
-# Poseidon-Plugin-Template
+# RetroBridge
 
-This repository serves as a template to assist with creating plugins for Project Poseidon.
+RetroBridge is a compatibility bridge plugin for Project Poseidon servers.
 
-It includes examples of:
-- A configuration file.
-- A listener.
-- A command.
+It provides a stable abstraction layer for common server features and selects an active provider based on what plugins are installed and how the server is configured.
 
-## Steps to Use This Template
+Current modules:
 
-1. **Clone the Repository**
-    - Clone this repository to your local machine.
+- economy
+- permissions
+- auth
+- whois
+- vanish
+- fakequit
 
-2. **Modify `pom.xml`**
-    - Update the following fields to reflect your plugin:
-        - `name`
-        - `version`
-        - `description`
-    - **Note:** Removing `-SNAPSHOT` from the version will trigger the `release.yml` GitHub Action to create a GitHub release.
+## Supported Providers
 
-3. **Refactor Package Structure**
-    - Refactor the package `org.retromc.templateplugin` to a unique package name for your plugin to avoid conflicts.
+### Economy
 
-4. **Update `plugin.yml`**
-    - Update the `plugin.yml` file to match the refactored package name and plugin metadata.
+- Essentials
+- Fundamentals
+- zCore
+- Dummy fallback
 
-5. **Modify the Code**
-    - Customize the code as required for your plugin.
-    - **Important:**
-        - Remove the player greeting example in the listener.
-        - Remove the test command.
+### Permissions
 
-## GitHub Actions
+- Dummy fallback
 
-This repository includes a pre-configured GitHub Action:
+### Auth
 
-1. **`build-and-test.yml`**:
-    - Runs tests on every push to ensure code quality.
-    - Uploads an artifact for each commit, allowing others to download the plugin for testing.
+- AuthMe
+- Dummy fallback
 
-2. **`release.yml`**:
-    - Automatically creates a GitHub release if the `-SNAPSHOT` suffix is removed from the version in `pom.xml`.
+### Whois
 
-With this template, you can kickstart your plugin development for Project Poseidon quickly and efficiently.
+- GeoIPTools
+- Dummy fallback
+
+### Vanish
+
+- Fundamentals
+- zCore
+- Dummy fallback
+
+### FakeQuit
+
+- Fundamentals
+- Dummy fallback
+
+## How It Works
+
+RetroBridge registers providers for each module and selects one active provider per module.
+
+Selection rules:
+
+1. If `preferred-provider.value` is set to a specific provider name, RetroBridge tries that provider first.
+2. If `preferred-provider.value` is `AUTO`, RetroBridge uses the first available provider in registration order.
+3. If a specific preferred provider is unavailable and `allow-fallback.value` is `true`, RetroBridge falls back to the first other available provider.
+4. If a specific preferred provider is unavailable and `allow-fallback.value` is `false`, the module has no active provider.
+
+Provider availability is determined by whether the backing plugin is enabled.
+
+## Command
+
+- `/retrobridge` - The command shows the active provider for each module, including the owner plugin and whether the active provider was registered as `BUILTIN` or `RUNTIME`.
+
+## Documentation
+
+- [Configuration](docs/CONFIG.md)
+- [Plugin Integration](docs/INTEGRATION.md)
+
+## Notes
+
+- Dummy providers are intentional fallbacks for modules with no real active integration.
+- Some bridges depend on online players for certain operations.
+
+## Building
+
+Compile:
+
+```bash
+mvn -q -DskipTests compile
+```
+
+Package:
+
+```bash
+mvn package
+```

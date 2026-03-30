@@ -4,10 +4,10 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>org.example</groupId>
-    <artifactId>Poseidon-Plugin-Template</artifactId>
+    <groupId>org.retromc</groupId>
+    <artifactId>RetroBridge</artifactId>
     <version>1.0.0-SNAPSHOT</version>
-    <description>A template for creating plugins for the Poseidon server software.</description>
+    <description>Compatibility bridge layer for economy, permissions, auth and whois plugins.</description>
 
     <properties>
         <maven.compiler.source>8</maven.compiler.source>
@@ -40,6 +40,18 @@
         </repository>
     </repositories>
 
+    <distributionManagement>
+        <repository>
+            <id>johnymuffin-nexus</id>
+            <url>https://repository.johnymuffin.com/repository/maven-releases/</url>
+        </repository>
+
+        <snapshotRepository>
+            <id>johnymuffin-nexus</id>
+            <url>https://repository.johnymuffin.com/repository/maven-snapshots/</url>
+        </snapshotRepository>
+    </distributionManagement>
+
     <build>
         <resources>
             <resource>
@@ -66,9 +78,62 @@
         <dependency>
             <groupId>com.legacyminecraft.poseidon</groupId>
             <artifactId>poseidon-craftbukkit</artifactId>
-            <version>1.1.8</version>
+            <version>1.1.12-260328-0558-5ba3017</version>
         </dependency>
 
+        <dependency>
+            <groupId>me.zavdav</groupId>
+            <artifactId>zcore</artifactId>
+            <version>0.23.1</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.earth2me</groupId>
+            <artifactId>essentials</artifactId>
+            <version>2.6.8</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.johnymuffin.beta</groupId>
+            <artifactId>fundamentals</artifactId>
+            <version>1.0.7</version>
+        </dependency>
+
+        <dependency>
+            <groupId>uk.org.whoami</groupId>
+            <artifactId>authme</artifactId>
+            <version>3.4-RMC</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.cypherx</groupId>
+            <artifactId>xauth</artifactId>
+            <version>1.2.5</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.oldschoolminecraft</groupId>
+            <artifactId>osas</artifactId>
+            <version>0</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.retromc</groupId>
+            <artifactId>GeoIPTools</artifactId>
+            <version>1.0.0</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.johnymuffin.jperms</groupId>
+            <artifactId>beta</artifactId>
+            <version>1.0.1</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.nijikokun.bukkit</groupId>
+            <artifactId>Permissions</artifactId>
+            <version>2.5</version>
+        </dependency>
     </dependencies>
 
 </project>

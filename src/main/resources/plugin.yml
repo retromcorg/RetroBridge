@@ -1,22 +1,19 @@
 name: ${project.name}
 description: ${project.description}
-main: org.retromc.templateplugin.TemplatePlugin
+main: org.retromc.retrobridge.RetroBridge
 version: ${project.version}
 authors:
   - JohnyMuffin
-softdepend:
-  - Essentials
+
+load: STARTUP # Load before most plugins
 
 commands:
-  testcommand:
-    description: A test command for the plugin.
-    usage: /<command> [args]
-    aliases: [tc]
-    permission: myplugin.testcommand
-    permission-message: You do not have permission to use this command.
+  retrobridge:
+    description: RetroBridge command set.
+    usage: /<command> [status]
+    permission: retrobridge.status
 
 permissions:
-  myplugin.*:
-    description: Gives access to all myplugin commands.
-    children:
-      myplugin.testcommand: true
+  retrobridge.status:
+    description: Allows viewing RetroBridge active provider status.
+    default: op
