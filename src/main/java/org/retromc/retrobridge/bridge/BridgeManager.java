@@ -1,6 +1,10 @@
 package org.retromc.retrobridge.bridge;
 
 import org.retromc.retrobridge.RetroBridge;
+import org.retromc.retrobridge.bridge.afk.AFKBridge;
+import org.retromc.retrobridge.bridge.afk.AFKProvider;
+import org.retromc.retrobridge.bridge.afk.DummyAFKProvider;
+import org.retromc.retrobridge.bridge.afk.fundamentals.FundamentalsAFKProvider;
 import org.retromc.retrobridge.bridge.auth.AuthBridge;
 import org.retromc.retrobridge.bridge.auth.AuthProvider;
 import org.retromc.retrobridge.bridge.auth.DummyAuthProvider;
@@ -49,6 +53,10 @@ public class BridgeManager {
     public void initialize() {
         String bridgePluginName = plugin.getDescription().getName();
         plugin.debug("Initializing built-in providers.");
+
+        // AFK providers
+        registerBuiltinProvider(new FundamentalsAFKProvider(bridgePluginName));
+        registerBuiltinProvider(new DummyAFKProvider(bridgePluginName));
 
         // Economy providers
         registerBuiltinProvider(new EssentialsEconomyProvider(bridgePluginName));
@@ -146,6 +154,14 @@ public class BridgeManager {
             }
         }
         return removed;
+    }
+
+    public synchronized AFKBridge getAFKBridge() {
+        BridgeProvider provider = getActiveProvider(BridgeModuleType.AFK);
+        if (provider instanceof AFKProvider) {
+            return ((AFKProvider) provider).getAFKBridge();
+        }
+        return null;
     }
 
     public synchronized EconomyBridge getEconomyBridge() {

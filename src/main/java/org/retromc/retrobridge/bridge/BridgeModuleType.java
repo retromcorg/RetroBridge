@@ -1,6 +1,7 @@
 package org.retromc.retrobridge.bridge;
 
 public enum BridgeModuleType {
+    AFK("afk"),
     ECONOMY("economy"),
     PERMISSIONS("permissions"),
     AUTH("auth"),
