@@ -31,7 +31,6 @@ jobs:
           echo "version=$VERSION" >> $GITHUB_OUTPUT
           echo "Building version: $VERSION"
 
-
       - name: Write Maven settings.xml for Nexus auth
         run: |
           mkdir -p ~/.m2
@@ -54,3 +53,6 @@ jobs:
 
       - name: Build & Deploy to Nexus
         run: mvn -B -DskipTests clean deploy
+        env:
+          NEXUS_USERNAME: ${{ secrets.NEXUS_USERNAME }}
+          NEXUS_PASSWORD: ${{ secrets.NEXUS_PASSWORD }}
