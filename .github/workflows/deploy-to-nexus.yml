@@ -1,4 +1,4 @@
-name: Deploy to nexus
+name: Build & Deploy to Nexus
 
 on:
   push:
@@ -10,7 +10,7 @@ permissions:
   contents: read
 
 jobs:
-  deploy-snapshot:
+  deploy:
     runs-on: ubuntu-latest
 
     steps:
@@ -26,46 +26,12 @@ jobs:
 
       - name: Read Maven project version
         id: version
-        shell: bash
         run: |
-          set -euo pipefail
           VERSION=$(mvn -q -DforceStdout help:evaluate -Dexpression=project.version)
-          echo "version=$VERSION" >> "$GITHUB_OUTPUT"
-          echo "Maven project version: $VERSION"
+          echo "version=$VERSION" >> $GITHUB_OUTPUT
+          echo "Building version: $VERSION"
 
-      - name: Fail if NOT a snapshot version
-        shell: bash
-        run: |
-          set -euo pipefail
-          if [[ "${{ steps.version.outputs.version }}" != *"-SNAPSHOT" ]]; then
-            echo "ERROR: Unstable branch must deploy a -SNAPSHOT version."
-            echo "Current project.version: ${{ steps.version.outputs.version }}"
-            exit 1
-          fi
-
-      - name: Create version.properties
-        uses: ./.github/actions/build-metadata
-        with:
-          release_version: ${{ steps.version.outputs.version }}
-
-      - name: Write version.txt from Maven version
-        shell: bash
-        run: |
-          set -euo pipefail
-          SHORT_SHA="$(echo "${GITHUB_SHA}" | cut -c1-7)"
-          printf '%s\n' "${{ steps.version.outputs.version }}-${SHORT_SHA}" > version.txt
-          mkdir -p src/main/resources
-          cp version.txt src/main/resources/version.txt
-
-      - name: Write Maven settings.xml for Nexus
-        uses: ./.github/actions/nexus-settings
-        with:
-          server_id: johnymuffin-nexus
-          nexus_username: ${{ secrets.NEXUS_USERNAME }}
-          nexus_password: ${{ secrets.NEXUS_PASSWORD }}
-
-      - name: Build & Deploy Snapshot to Nexus
-        shell: bash
+      - name: Build & Deploy to Nexus
         run: mvn -B -DskipTests clean deploy
         env:
           NEXUS_USERNAME: ${{ secrets.NEXUS_USERNAME }}
