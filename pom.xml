@@ -6,7 +6,7 @@
 
     <groupId>org.retromc</groupId>
     <artifactId>RetroBridge</artifactId>
-    <version>0.0.1</version>
+    <version>0.0.2</version>
     <description>Compatibility bridge layer for economy, permissions, auth and whois plugins.</description>
 
     <properties>
@@ -79,60 +79,70 @@
             <groupId>com.legacyminecraft.poseidon</groupId>
             <artifactId>poseidon-craftbukkit</artifactId>
             <version>1.1.12-260328-0558-5ba3017</version>
+            <scope>provided</scope>
         </dependency>
 
         <dependency>
             <groupId>me.zavdav</groupId>
             <artifactId>zcore</artifactId>
             <version>0.23.1</version>
+            <scope>provided</scope>
         </dependency>
 
         <dependency>
             <groupId>com.earth2me</groupId>
             <artifactId>essentials</artifactId>
             <version>2.6.8</version>
+            <scope>provided</scope>
         </dependency>
 
         <dependency>
             <groupId>com.johnymuffin.beta</groupId>
             <artifactId>fundamentals</artifactId>
             <version>1.0.7</version>
+            <scope>provided</scope>
         </dependency>
 
         <dependency>
             <groupId>uk.org.whoami</groupId>
             <artifactId>authme</artifactId>
             <version>3.4-RMC</version>
+            <scope>provided</scope>
         </dependency>
 
         <dependency>
             <groupId>com.cypherx</groupId>
             <artifactId>xauth</artifactId>
             <version>1.2.5</version>
+            <scope>provided</scope>
         </dependency>
 
         <dependency>
             <groupId>com.oldschoolminecraft</groupId>
             <artifactId>osas</artifactId>
             <version>0</version>
+            <scope>provided</scope>
         </dependency>
 
         <dependency>
             <groupId>org.retromc</groupId>
             <artifactId>GeoIPTools</artifactId>
             <version>1.0.0</version>
+            <scope>provided</scope>
         </dependency>
 
         <dependency>
             <groupId>com.johnymuffin.jperms</groupId>
             <artifactId>beta</artifactId>
             <version>1.0.1</version>
+            <scope>provided</scope>
         </dependency>
 
         <dependency>
             <groupId>com.nijikokun.bukkit</groupId>
             <artifactId>Permissions</artifactId>
             <version>2.5</version>
+            <scope>provided</scope>
         </dependency>
     </dependencies>
 
