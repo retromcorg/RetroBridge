@@ -65,6 +65,7 @@ public class BridgeManager {
         registerBuiltinProvider(new DummyEconomyProvider(bridgePluginName));
 
         // Permission providers
+        registerBuiltinProvider(new JPermsPermissionProvider(bridgePluginName));
         registerBuiltinProvider(new DummyPermissionProvider(bridgePluginName));
 
 
