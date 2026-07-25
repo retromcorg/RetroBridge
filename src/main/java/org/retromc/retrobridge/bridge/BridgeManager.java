@@ -22,6 +22,7 @@ import org.retromc.retrobridge.bridge.fakequit.fundamentals.FundamentalsFakeQuit
 import org.retromc.retrobridge.bridge.permission.DummyPermissionProvider;
 import org.retromc.retrobridge.bridge.permission.PermissionBridge;
 import org.retromc.retrobridge.bridge.permission.PermissionProvider;
+import org.retromc.retrobridge.bridge.permission.jperms.JPermsPermissionProvider;
 import org.retromc.retrobridge.bridge.vanish.DummyVanishProvider;
 import org.retromc.retrobridge.bridge.vanish.VanishBridge;
 import org.retromc.retrobridge.bridge.vanish.VanishProvider;
