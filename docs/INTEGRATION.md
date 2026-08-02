@@ -7,24 +7,90 @@ Another plugin can integrate with RetroBridge in two main ways:
 
 ## Consuming an Active Bridge
 
-This example reads the active economy bridge and uses it to fetch a balance.
+Plugins can copy a small accessor into their own codebase to avoid repeating plugin lookup and null checks.
 
 ```java
+import org.bukkit.Bukkit;
 import org.bukkit.plugin.Plugin;
 import org.retromc.retrobridge.RetroBridge;
+import org.retromc.retrobridge.bridge.BridgeManager;
+import org.retromc.retrobridge.bridge.afk.AFKBridge;
+import org.retromc.retrobridge.bridge.auth.AuthBridge;
+import org.retromc.retrobridge.bridge.economy.EconomyBridge;
+import org.retromc.retrobridge.bridge.fakequit.FakeQuitBridge;
+import org.retromc.retrobridge.bridge.permission.PermissionBridge;
+import org.retromc.retrobridge.bridge.vanish.VanishBridge;
+import org.retromc.retrobridge.bridge.whois.WhoisBridge;
+
+public final class RetroBridgeHook {
+    private static final String PLUGIN_NAME = "RetroBridge";
+
+    public boolean isAvailable() {
+        return getRetroBridge() != null;
+    }
+
+    public AFKBridge getAFKBridge() {
+        BridgeManager manager = getBridgeManager();
+        return manager == null ? null : manager.getAFKBridge();
+    }
+
+    public EconomyBridge getEconomyBridge() {
+        BridgeManager manager = getBridgeManager();
+        return manager == null ? null : manager.getEconomyBridge();
+    }
+
+    public PermissionBridge getPermissionBridge() {
+        BridgeManager manager = getBridgeManager();
+        return manager == null ? null : manager.getPermissionBridge();
+    }
+
+    public AuthBridge getAuthBridge() {
+        BridgeManager manager = getBridgeManager();
+        return manager == null ? null : manager.getAuthBridge();
+    }
+
+    public WhoisBridge getWhoisBridge() {
+        BridgeManager manager = getBridgeManager();
+        return manager == null ? null : manager.getWhoisBridge();
+    }
+
+    public VanishBridge getVanishBridge() {
+        BridgeManager manager = getBridgeManager();
+        return manager == null ? null : manager.getVanishBridge();
+    }
+
+    public FakeQuitBridge getFakeQuitBridge() {
+        BridgeManager manager = getBridgeManager();
+        return manager == null ? null : manager.getFakeQuitBridge();
+    }
+
+    private BridgeManager getBridgeManager() {
+        RetroBridge retroBridge = getRetroBridge();
+        return retroBridge == null ? null : retroBridge.getBridgeManager();
+    }
+
+    private RetroBridge getRetroBridge() {
+        Plugin plugin = Bukkit.getPluginManager().getPlugin(PLUGIN_NAME);
+        if (plugin instanceof RetroBridge && plugin.isEnabled()) {
+            return (RetroBridge) plugin;
+        }
+        return null;
+    }
+}
+```
+
+Example usage:
+
+```java
 import org.retromc.retrobridge.bridge.economy.EconomyBridge;
 
 import java.util.UUID;
 
 public class ExampleUsage {
-    public double getBalance(UUID playerUuid) {
-        Plugin plugin = getServer().getPluginManager().getPlugin("RetroBridge");
-        if (!(plugin instanceof RetroBridge)) {
-            return 0.0D;
-        }
+    private final RetroBridgeHook retroBridge = new RetroBridgeHook();
 
-        RetroBridge retroBridge = (RetroBridge) plugin;
-        EconomyBridge economyBridge = retroBridge.getBridgeManager().getEconomyBridge();
+    public double getBalance(UUID playerUuid) {
+        EconomyBridge economyBridge = retroBridge.getEconomyBridge();
         if (economyBridge == null) {
             return 0.0D;
         }
@@ -33,6 +99,35 @@ public class ExampleUsage {
     }
 }
 ```
+
+## Optional Dependency Setup
+
+If your plugin can run without RetroBridge, declare it as a soft dependency:
+
+```yml
+softdepend: [RetroBridge]
+```
+
+If your plugin requires RetroBridge to function, declare it as a hard dependency instead:
+
+```yml
+depend: [RetroBridge]
+```
+
+Keep RetroBridge imports isolated to your hook/accessor class. Do not reference RetroBridge classes from your main plugin class, static fields, static initializers, or early-loaded method signatures unless RetroBridge is a hard dependency.
+
+Before creating or using the hook, check that RetroBridge is present and enabled:
+
+```java
+import org.bukkit.plugin.Plugin;
+
+Plugin retroBridgePlugin = getServer().getPluginManager().getPlugin("RetroBridge");
+if (retroBridgePlugin != null && retroBridgePlugin.isEnabled()) {
+    RetroBridgeHook retroBridge = new RetroBridgeHook();
+}
+```
+
+This avoids loading RetroBridge-specific classes on servers that do not have RetroBridge installed.
 
 The same pattern applies to the other modules:
 
