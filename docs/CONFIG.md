@@ -49,6 +49,7 @@ Each module has the same config shape under:
 Available modules:
 
 - `economy`
+- `afk`
 - `permissions`
 - `auth`
 - `whois`
@@ -62,7 +63,7 @@ Controls which provider RetroBridge should prefer for that module.
 Accepted values:
 
 - `AUTO`
-- a concrete provider name such as `Essentials`, `Fundamentals`, `ZCore`, `AuthMe`, or `GeoIPTools`
+- a concrete provider name such as `Essentials`, `Fundamentals`, `ZCore`, `PermissionsEx`, `JPerms`, `SuperPerms`, `AuthMe`, `xAuth`, `OSAS`, or `GeoIPTools`
 
 Behavior:
 
@@ -117,6 +118,11 @@ settings:
       value: true
     modules:
       economy:
+        preferred-provider:
+          value: AUTO
+        allow-fallback:
+          value: true
+      afk:
         preferred-provider:
           value: AUTO
         allow-fallback:

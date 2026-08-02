@@ -42,6 +42,27 @@ The same pattern applies to the other modules:
 - `getVanishBridge()`
 - `getFakeQuitBridge()`
 
+## Authentication Events
+
+When a real auth provider is active, RetroBridge checks online players every 5 ticks and fires `PlayerAuthenticatedEvent` when a player transitions to authenticated.
+
+```java
+import org.bukkit.event.Event;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.Listener;
+import org.retromc.retrobridge.api.event.PlayerAuthenticatedEvent;
+
+public class AuthListener implements Listener {
+    @EventHandler(priority = Event.Priority.Normal)
+    public void onPlayerAuthenticated(PlayerAuthenticatedEvent event) {
+        String playerName = event.getPlayer().getName();
+        String providerName = event.getProviderName();
+    }
+}
+```
+
+The event is not fired for the dummy auth fallback.
+
 ## Registering a Provider at Runtime
 
 This example registers a custom economy provider from another plugin during `onEnable()`.

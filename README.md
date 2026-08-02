@@ -7,6 +7,7 @@ It provides a stable abstraction layer for common server features and selects an
 Current modules:
 
 - economy
+- afk
 - permissions
 - auth
 - whois
@@ -17,18 +18,29 @@ Current modules:
 
 ### Economy
 
-- Essentials
 - Fundamentals
 - zCore
+- Essentials
+- Dummy fallback
+
+### AFK
+
+- Fundamentals
+- Essentials
 - Dummy fallback
 
 ### Permissions
 
+- PermissionsEx
+- JPerms
+- SuperPerms
 - Dummy fallback
 
 ### Auth
 
 - AuthMe
+- xAuth
+- OSAS
 - Dummy fallback
 
 ### Whois

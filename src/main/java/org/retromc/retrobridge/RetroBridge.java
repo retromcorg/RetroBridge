@@ -3,6 +3,7 @@ package org.retromc.retrobridge;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.PluginDescriptionFile;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.retromc.retrobridge.auth.AuthenticatedPoller;
 import org.retromc.retrobridge.bridge.BridgeManager;
 import org.retromc.retrobridge.commands.RetroBridgeCommand;
 
@@ -19,6 +20,7 @@ public class RetroBridge extends JavaPlugin {
 
     private Config configuration;
     private BridgeManager bridgeManager;
+    private AuthenticatedPoller authenticatedPoller;
 
 
     @Override
@@ -41,6 +43,9 @@ public class RetroBridge extends JavaPlugin {
         Listener listener = new Listener(this);
         getServer().getPluginManager().registerEvents(listener, this);
 
+        authenticatedPoller = new AuthenticatedPoller(this);
+        authenticatedPoller.start();
+
         log.info("[" + pluginName + "] Is Loaded, Version: " + pdf.getVersion());
     }
 
@@ -50,6 +55,11 @@ public class RetroBridge extends JavaPlugin {
 
         // Save configuration
         //config.save(); // Save the configuration file to disk. This should only be necessary if the configuration cam be modified during runtime.
+
+        if (authenticatedPoller != null) {
+            authenticatedPoller.stop();
+            authenticatedPoller = null;
+        }
 
         instance = null;
         log.info("[" + pluginName + "] Is Unloaded, Version: " + pdf.getVersion());

@@ -4,11 +4,14 @@ import org.retromc.retrobridge.RetroBridge;
 import org.retromc.retrobridge.bridge.afk.AFKBridge;
 import org.retromc.retrobridge.bridge.afk.AFKProvider;
 import org.retromc.retrobridge.bridge.afk.DummyAFKProvider;
+import org.retromc.retrobridge.bridge.afk.essentials.EssentialsAFKProvider;
 import org.retromc.retrobridge.bridge.afk.fundamentals.FundamentalsAFKProvider;
 import org.retromc.retrobridge.bridge.auth.AuthBridge;
 import org.retromc.retrobridge.bridge.auth.AuthProvider;
 import org.retromc.retrobridge.bridge.auth.DummyAuthProvider;
 import org.retromc.retrobridge.bridge.auth.authme.AuthMeAuthProvider;
+import org.retromc.retrobridge.bridge.auth.osas.OSASAuthProvider;
+import org.retromc.retrobridge.bridge.auth.xauth.XAuthAuthProvider;
 import org.retromc.retrobridge.bridge.economy.DummyEconomyProvider;
 import org.retromc.retrobridge.bridge.economy.EconomyBridge;
 import org.retromc.retrobridge.bridge.economy.EconomyProvider;
@@ -23,6 +26,8 @@ import org.retromc.retrobridge.bridge.permission.DummyPermissionProvider;
 import org.retromc.retrobridge.bridge.permission.PermissionBridge;
 import org.retromc.retrobridge.bridge.permission.PermissionProvider;
 import org.retromc.retrobridge.bridge.permission.jperms.JPermsPermissionProvider;
+import org.retromc.retrobridge.bridge.permission.pex.PermissionsExPermissionProvider;
+import org.retromc.retrobridge.bridge.permission.superperms.SuperPermsPermissionProvider;
 import org.retromc.retrobridge.bridge.vanish.DummyVanishProvider;
 import org.retromc.retrobridge.bridge.vanish.VanishBridge;
 import org.retromc.retrobridge.bridge.vanish.VanishProvider;
@@ -57,21 +62,26 @@ public class BridgeManager {
 
         // AFK providers
         registerBuiltinProvider(new FundamentalsAFKProvider(bridgePluginName));
+        registerBuiltinProvider(new EssentialsAFKProvider(bridgePluginName));
         registerBuiltinProvider(new DummyAFKProvider(bridgePluginName));
 
         // Economy providers
-        registerBuiltinProvider(new EssentialsEconomyProvider(bridgePluginName));
         registerBuiltinProvider(new FundamentalsEconomyProvider(bridgePluginName));
         registerBuiltinProvider(new ZCoreEconomyProvider(bridgePluginName));
+        registerBuiltinProvider(new EssentialsEconomyProvider(bridgePluginName));
         registerBuiltinProvider(new DummyEconomyProvider(bridgePluginName));
 
         // Permission providers
+        registerBuiltinProvider(new PermissionsExPermissionProvider(bridgePluginName));
         registerBuiltinProvider(new JPermsPermissionProvider(bridgePluginName));
+        registerBuiltinProvider(new SuperPermsPermissionProvider(bridgePluginName));
         registerBuiltinProvider(new DummyPermissionProvider(bridgePluginName));
 
 
         // Auth providers
         registerBuiltinProvider(new AuthMeAuthProvider(bridgePluginName));
+        registerBuiltinProvider(new XAuthAuthProvider(bridgePluginName));
+        registerBuiltinProvider(new OSASAuthProvider(bridgePluginName));
         registerBuiltinProvider(new DummyAuthProvider(bridgePluginName));
 
 
