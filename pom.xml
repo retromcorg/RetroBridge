@@ -6,7 +6,7 @@
 
     <groupId>org.retromc</groupId>
     <artifactId>RetroBridge</artifactId>
-    <version>1.0.2</version>
+    <version>1.1.0</version>
     <description>Compatibility bridge layer for economy, permissions, auth and whois plugins.</description>
 
     <properties>
