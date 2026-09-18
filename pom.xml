@@ -10,8 +10,7 @@
     <description>Compatibility bridge layer for economy, permissions, auth and whois plugins.</description>
 
     <properties>
-        <maven.compiler.source>8</maven.compiler.source>
-        <maven.compiler.target>8</maven.compiler.target>
+        <maven.compiler.release>25</maven.compiler.release>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
@@ -63,11 +62,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.8.1</version>
-                <configuration>
-                    <source>1.8</source>
-                    <target>1.8</target>
-                </configuration>
+                <version>3.13.0</version>
             </plugin>
         </plugins>
     </build>
@@ -76,9 +71,9 @@
     <dependencies>
 
         <dependency>
-            <groupId>com.legacyminecraft.poseidon</groupId>
-            <artifactId>poseidon-craftbukkit</artifactId>
-            <version>1.1.12-260328-0558-5ba3017</version>
+            <groupId>com.legacyminecraft</groupId>
+            <artifactId>poseidon-api</artifactId>
+            <version>2.0.0-20260912.153345-20</version>
             <scope>provided</scope>
         </dependency>
 
@@ -142,6 +137,7 @@
             <groupId>ru.tehkode.permissions</groupId>
             <artifactId>bukkit</artifactId>
             <version>1.13</version>
+            <scope>provided</scope>
         </dependency>
     </dependencies>
 

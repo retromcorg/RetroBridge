@@ -13,13 +13,13 @@ public class Listener implements org.bukkit.event.Listener {
         this.plugin = plugin;
     }
 
-    @EventHandler(priority = Event.Priority.Normal)
+    @EventHandler
     public void onPluginEnable(PluginEnableEvent event) {
         plugin.debug("Observed plugin enable: " + event.getPlugin().getDescription().getName());
         plugin.getBridgeManager().refreshAll("plugin-enabled:" + event.getPlugin().getDescription().getName());
     }
 
-    @EventHandler(priority = Event.Priority.Normal)
+    @EventHandler
     public void onPluginDisable(PluginDisableEvent event) {
         plugin.debug("Observed plugin disable: " + event.getPlugin().getDescription().getName());
         plugin.getBridgeManager().unregisterProvidersByOwner(event.getPlugin().getDescription().getName());
