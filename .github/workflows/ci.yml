@@ -95,7 +95,7 @@ jobs:
           distribution: temurin
           java-version: "25"
           cache: maven
-          server-id: legacyminecraft
+          server-id: legacyminecraft-nexus
           server-username: MAVEN_USERNAME
           server-password: MAVEN_PASSWORD
 
