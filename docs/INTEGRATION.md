@@ -142,13 +142,13 @@ The same pattern applies to the other modules:
 When a real auth provider is active, RetroBridge checks online players every 5 ticks and fires `PlayerAuthenticatedEvent` when a player transitions to authenticated.
 
 ```java
-import org.bukkit.event.Event;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.retromc.retrobridge.api.event.PlayerAuthenticatedEvent;
 
 public class AuthListener implements Listener {
-    @EventHandler(priority = Event.Priority.Normal)
+    @EventHandler(priority = EventPriority.NORMAL)
     public void onPlayerAuthenticated(PlayerAuthenticatedEvent event) {
         String playerName = event.getPlayer().getName();
         String providerName = event.getProviderName();
@@ -156,7 +156,20 @@ public class AuthListener implements Listener {
 }
 ```
 
-The event is not fired for the dummy auth fallback.
+Register it the normal way, from `onEnable()`:
+
+```java
+getServer().getPluginManager().registerEvents(new AuthListener(), this);
+```
+
+The event is fired on the main thread, and is not fired for the dummy auth fallback.
+
+> **Changed in 1.1.1.** `PlayerAuthenticatedEvent` now declares its own `HandlerList`. Before 1.1.1 it
+> used the legacy custom-event constructor, so `registerEvents` rejected any listener for it with
+> `IllegalPluginAccessException: Unable to find handler list for event ...` — the example above could
+> not actually be registered on a Poseidon V2 server. If you worked around that with a
+> `CustomEventListener` and `registerEvent(Event.Type.CUSTOM_EVENT, ...)`, drop the workaround and use
+> `@EventHandler`; the legacy route no longer receives this event.
 
 ## Registering a Provider at Runtime
 

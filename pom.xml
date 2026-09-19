@@ -6,7 +6,7 @@
 
     <groupId>org.retromc</groupId>
     <artifactId>RetroBridge</artifactId>
-    <version>1.1.0</version>
+    <version>1.1.1</version>
     <description>Compatibility bridge layer for economy, permissions, auth and whois plugins.</description>
 
     <properties>
@@ -41,13 +41,13 @@
 
     <distributionManagement>
         <repository>
-            <id>johnymuffin-nexus</id>
-            <url>https://repository.johnymuffin.com/repository/maven-releases/</url>
+            <id>legacyminecraft-nexus</id>
+            <url>https://repository.legacyminecraft.com/repository/maven-releases/</url>
         </repository>
 
         <snapshotRepository>
-            <id>johnymuffin-nexus</id>
-            <url>https://repository.johnymuffin.com/repository/maven-snapshots/</url>
+            <id>legacyminecraft-nexus</id>
+            <url>https://repository.legacyminecraft.com/repository/maven-snapshots/</url>
         </snapshotRepository>
     </distributionManagement>
 
@@ -73,7 +73,7 @@
         <dependency>
             <groupId>com.legacyminecraft</groupId>
             <artifactId>poseidon-api</artifactId>
-            <version>2.0.0-20260912.153345-20</version>
+            <version>2.0.0</version>
             <scope>provided</scope>
         </dependency>
 
