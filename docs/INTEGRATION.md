@@ -18,6 +18,7 @@ import org.retromc.retrobridge.bridge.afk.AFKBridge;
 import org.retromc.retrobridge.bridge.auth.AuthBridge;
 import org.retromc.retrobridge.bridge.economy.EconomyBridge;
 import org.retromc.retrobridge.bridge.fakequit.FakeQuitBridge;
+import org.retromc.retrobridge.bridge.ignore.IgnoreBridge;
 import org.retromc.retrobridge.bridge.permission.PermissionBridge;
 import org.retromc.retrobridge.bridge.vanish.VanishBridge;
 import org.retromc.retrobridge.bridge.whois.WhoisBridge;
@@ -62,6 +63,11 @@ public final class RetroBridgeHook {
     public FakeQuitBridge getFakeQuitBridge() {
         BridgeManager manager = getBridgeManager();
         return manager == null ? null : manager.getFakeQuitBridge();
+    }
+
+    public IgnoreBridge getIgnoreBridge() {
+        BridgeManager manager = getBridgeManager();
+        return manager == null ? null : manager.getIgnoreBridge();
     }
 
     private BridgeManager getBridgeManager() {
@@ -136,6 +142,7 @@ The same pattern applies to the other modules:
 - `getWhoisBridge()`
 - `getVanishBridge()`
 - `getFakeQuitBridge()`
+- `getIgnoreBridge()`
 
 ## Authentication Events
 

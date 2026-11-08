@@ -3,7 +3,6 @@ package org.retromc.retrobridge.bridge.permission.pex;
 import org.bukkit.entity.Player;
 import org.retromc.retrobridge.bridge.permission.PermissionBridge;
 import org.retromc.retrobridge.util.PlayerLookup;
-import ru.tehkode.permissions.PermissionGroup;
 import ru.tehkode.permissions.PermissionManager;
 import ru.tehkode.permissions.PermissionUser;
 import ru.tehkode.permissions.bukkit.PermissionsEx;

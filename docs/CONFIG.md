@@ -55,6 +55,7 @@ Available modules:
 - `whois`
 - `vanish`
 - `fakequit`
+- `ignore`
 
 ### `preferred-provider.value`
 
@@ -148,6 +149,11 @@ settings:
         allow-fallback:
           value: true
       fakequit:
+        preferred-provider:
+          value: AUTO
+        allow-fallback:
+          value: true
+      ignore:
         preferred-provider:
           value: AUTO
         allow-fallback:

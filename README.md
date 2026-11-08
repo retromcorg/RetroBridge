@@ -13,13 +13,14 @@ Current modules:
 - whois
 - vanish
 - fakequit
+- ignore
 
 ## Supported Providers
 
 ### Economy
 
 - Fundamentals
-- zCore
+- ZCore
 - Essentials
 - Dummy fallback
 
@@ -51,12 +52,18 @@ Current modules:
 ### Vanish
 
 - Fundamentals
-- zCore
+- ZCore
 - Dummy fallback
 
 ### FakeQuit
 
 - Fundamentals
+- Dummy fallback
+
+### Ignore
+
+- ZCore
+- Essentials
 - Dummy fallback
 
 ## How It Works

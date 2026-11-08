@@ -42,11 +42,13 @@ public class Config extends Configuration {
         generateConfigOption("settings.hooks.refresh-on-plugin-events.info", "When true, re-detect hooks when a plugin is enabled or disabled.");
 
         generateModuleDefaults("economy");
+        generateModuleDefaults("afk");
         generateModuleDefaults("permissions");
         generateModuleDefaults("auth");
         generateModuleDefaults("whois");
         generateModuleDefaults("vanish");
         generateModuleDefaults("fakequit");
+        generateModuleDefaults("ignore");
     }
 
     private void generateModuleDefaults(String module) {

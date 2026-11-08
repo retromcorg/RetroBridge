@@ -22,6 +22,11 @@ import org.retromc.retrobridge.bridge.fakequit.DummyFakeQuitProvider;
 import org.retromc.retrobridge.bridge.fakequit.FakeQuitBridge;
 import org.retromc.retrobridge.bridge.fakequit.FakeQuitProvider;
 import org.retromc.retrobridge.bridge.fakequit.fundamentals.FundamentalsFakeQuitProvider;
+import org.retromc.retrobridge.bridge.ignore.DummyIgnoreProvider;
+import org.retromc.retrobridge.bridge.ignore.IgnoreBridge;
+import org.retromc.retrobridge.bridge.ignore.IgnoreProvider;
+import org.retromc.retrobridge.bridge.ignore.essentials.EssentialsIgnoreProvider;
+import org.retromc.retrobridge.bridge.ignore.zcore.ZCoreIgnoreProvider;
 import org.retromc.retrobridge.bridge.permission.DummyPermissionProvider;
 import org.retromc.retrobridge.bridge.permission.PermissionBridge;
 import org.retromc.retrobridge.bridge.permission.PermissionProvider;
@@ -37,8 +42,6 @@ import org.retromc.retrobridge.bridge.whois.DummyWhoisProvider;
 import org.retromc.retrobridge.bridge.whois.WhoisBridge;
 import org.retromc.retrobridge.bridge.whois.WhoisProvider;
 import org.retromc.retrobridge.bridge.whois.geoiptools.GeoIPToolsWhoisProvider;
-
-import org.bukkit.plugin.PluginManager;
 
 import java.util.ArrayList;
 import java.util.EnumMap;
@@ -98,6 +101,11 @@ public class BridgeManager {
         // FakeQuit providers
         registerBuiltinProvider(new FundamentalsFakeQuitProvider(bridgePluginName));
         registerBuiltinProvider(new DummyFakeQuitProvider(bridgePluginName));
+
+        // Ignore providers
+        registerBuiltinProvider(new ZCoreIgnoreProvider(bridgePluginName));
+        registerBuiltinProvider(new EssentialsIgnoreProvider(bridgePluginName));
+        registerBuiltinProvider(new DummyIgnoreProvider(bridgePluginName));
 
         refreshAll("startup");
     }
@@ -220,6 +228,14 @@ public class BridgeManager {
         BridgeProvider provider = getActiveProvider(BridgeModuleType.FAKEQUIT);
         if (provider instanceof FakeQuitProvider) {
             return ((FakeQuitProvider) provider).getFakeQuitBridge();
+        }
+        return null;
+    }
+
+    public synchronized IgnoreBridge getIgnoreBridge() {
+        BridgeProvider provider = getActiveProvider(BridgeModuleType.IGNORE);
+        if (provider instanceof IgnoreProvider) {
+            return ((IgnoreProvider) provider).getIgnoreBridge();
         }
         return null;
     }
