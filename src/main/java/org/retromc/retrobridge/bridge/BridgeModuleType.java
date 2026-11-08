@@ -7,7 +7,8 @@ public enum BridgeModuleType {
     AUTH("auth"),
     WHOIS("whois"),
     VANISH("vanish"),
-    FAKEQUIT("fakequit");
+    FAKEQUIT("fakequit"),
+    IGNORE("ignore");
 
     private final String configKey;
 

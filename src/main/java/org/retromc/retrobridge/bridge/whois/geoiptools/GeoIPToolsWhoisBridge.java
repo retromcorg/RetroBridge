@@ -5,8 +5,8 @@ import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 import org.retromc.geoiptools.GeoIPTools;
 import org.retromc.geoiptools.api.GeoIPLookupService;
-import org.retromc.retrobridge.util.PlayerLookup;
 import org.retromc.retrobridge.bridge.whois.WhoisBridge;
+import org.retromc.retrobridge.util.PlayerLookup;
 
 import java.net.InetSocketAddress;
 import java.util.LinkedHashMap;

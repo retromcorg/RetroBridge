@@ -2,11 +2,7 @@ package org.retromc.retrobridge.bridge.fakequit.fundamentals;
 
 import com.johnymuffin.beta.fundamentals.Fundamentals;
 import com.johnymuffin.beta.fundamentals.FundamentalsPlayerMap;
-import com.johnymuffin.beta.fundamentals.hooks.permissions.PermissionsHook;
 import com.johnymuffin.beta.fundamentals.player.FundamentalsPlayer;
-import com.johnymuffin.beta.fundamentals.settings.FundamentalsConfig;
-import com.johnymuffin.beta.fundamentals.util.Utils;
-import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.retromc.retrobridge.bridge.fakequit.FakeQuitBridge;
 import org.retromc.retrobridge.util.PlayerLookup;
