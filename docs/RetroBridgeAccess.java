@@ -30,13 +30,16 @@ public final class RetroBridgeAccess {
     }
 
     public RetroBridge getRetroBridge() {
+        Plugin plugin = Bukkit.getPluginManager().getPlugin(PLUGIN_NAME);
+        if (plugin == null || !plugin.isEnabled()) {
+            return null;
+        }
+
         RetroBridge instance = RetroBridge.getInstance();
         if (instance != null) {
             return instance;
         }
-
-        Plugin plugin = Bukkit.getPluginManager().getPlugin(PLUGIN_NAME);
-        if (plugin instanceof RetroBridge && plugin.isEnabled()) {
+        if (plugin instanceof RetroBridge) {
             return (RetroBridge) plugin;
         }
         return null;

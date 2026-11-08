@@ -7,7 +7,9 @@ Another plugin can integrate with RetroBridge in two main ways:
 
 ## Consuming an Active Bridge
 
-Plugins can copy a small accessor into their own codebase to avoid repeating plugin lookup and null checks.
+RetroBridge ships an accessor, `org.retromc.retrobridge.api.RetroBridgeAccess`, that wraps the plugin lookup and null checks. Depending on how your plugin depends on RetroBridge, you either use that class directly or bundle your own copy. See [Choosing an Accessor](#choosing-an-accessor).
+
+A bundled accessor looks like this:
 
 ```java
 import org.bukkit.Bukkit;
@@ -77,10 +79,10 @@ public final class RetroBridgeHook {
 
     private RetroBridge getRetroBridge() {
         Plugin plugin = Bukkit.getPluginManager().getPlugin(PLUGIN_NAME);
-        if (plugin instanceof RetroBridge && plugin.isEnabled()) {
-            return (RetroBridge) plugin;
+        if (plugin == null || !plugin.isEnabled()) {
+            return null;
         }
-        return null;
+        return plugin instanceof RetroBridge ? (RetroBridge) plugin : null;
     }
 }
 ```
@@ -106,6 +108,42 @@ public class ExampleUsage {
 }
 ```
 
+## Choosing an Accessor
+
+The included `RetroBridgeAccess` lives inside the RetroBridge jar. On a server without RetroBridge, that class does not exist either, so `new RetroBridgeAccess()` throws `NoClassDefFoundError` before any of its checks run. What matters is whether your code can reach the accessor on a server without RetroBridge.
+
+### Use the included class
+
+Use `org.retromc.retrobridge.api.RetroBridgeAccess` directly when:
+
+- RetroBridge is a hard `depend`. Bukkit will not enable your plugin without RetroBridge, so the class is always present.
+- RetroBridge is a `softdepend`, but you only create the accessor after checking that RetroBridge is present and enabled (see [Optional Dependency Setup](#optional-dependency-setup)).
+
+Declare RetroBridge with `provided` scope so it is not packaged into your jar:
+
+```xml
+<dependency>
+    <groupId>org.retromc</groupId>
+    <artifactId>RetroBridge</artifactId>
+    <version>1.1.2</version>
+    <scope>provided</scope>
+</dependency>
+```
+
+The included class always matches the RetroBridge version running on the server, so you get fixes and new bridge getters without rebuilding your plugin.
+
+### Bundle your own copy
+
+Bundle an accessor in your own package when RetroBridge is a `softdepend` and your code creates the accessor unconditionally, for example as a field on a listener that is always registered.
+
+Copy [`RetroBridgeAccess.java`](RetroBridgeAccess.java) into your plugin and change its package to one you own. That template checks for RetroBridge by name before referencing any RetroBridge class, so every method returns `null` or `false` on servers without it.
+
+You can use maven-shade instead of copying the file, but limit it to that one class with a filter and relocate it into your own package.
+
+Never shade the class without relocating it. Two plugins would then both contain `org.retromc.retrobridge.api.RetroBridgeAccess`, and because Bukkit plugin classloaders share loaded classes, which copy you get depends on plugin load order.
+
+A bundled copy is frozen at the API version you built it against. If it calls a getter that the installed RetroBridge does not have (for example `getIgnoreBridge()`, added in 1.1.2, on an older RetroBridge), it throws `NoSuchMethodError` at the call site. Either call only bridges that exist in the oldest RetroBridge version you support, or catch `NoSuchMethodError` around newer ones.
+
 ## Optional Dependency Setup
 
 If your plugin can run without RetroBridge, declare it as a soft dependency:
@@ -122,18 +160,19 @@ depend: [RetroBridge]
 
 Keep RetroBridge imports isolated to your hook/accessor class. Do not reference RetroBridge classes from your main plugin class, static fields, static initializers, or early-loaded method signatures unless RetroBridge is a hard dependency.
 
-Before creating or using the hook, check that RetroBridge is present and enabled:
+If you use the included `RetroBridgeAccess` with a soft dependency, check that RetroBridge is present and enabled before creating it:
 
 ```java
 import org.bukkit.plugin.Plugin;
+import org.retromc.retrobridge.api.RetroBridgeAccess;
 
 Plugin retroBridgePlugin = getServer().getPluginManager().getPlugin("RetroBridge");
 if (retroBridgePlugin != null && retroBridgePlugin.isEnabled()) {
-    RetroBridgeHook retroBridge = new RetroBridgeHook();
+    RetroBridgeAccess retroBridge = new RetroBridgeAccess();
 }
 ```
 
-This avoids loading RetroBridge-specific classes on servers that do not have RetroBridge installed.
+This avoids loading RetroBridge-specific classes on servers that do not have RetroBridge installed. A bundled accessor like `RetroBridgeHook` above does this check itself, so it can be created unconditionally.
 
 The same pattern applies to the other modules:
 
